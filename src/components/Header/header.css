@@ -1,0 +1,15 @@
+.banner{
+    background-image: url('https://i.ibb.co/pWK9ZQj/banner.jpg');
+    background-size: cover;
+    height: 60vh;
+    background-position: center;
+}
+.header-menu img{
+    width: 150px;
+}
+
+nav ul li{
+    margin-left: 20px;
+    color: black;
+}
+

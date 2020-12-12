@@ -1,0 +1,14 @@
+.topmarzin{
+    margin-top: -120px;
+}
+
+.topmarzinCard{
+    margin-top: -20px;
+    height: 80px;
+    border-radius: 0 0 10px 10px;
+    border: none;
+}
+
+p{
+    text-decoration: none;
+}

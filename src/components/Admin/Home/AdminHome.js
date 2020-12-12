@@ -1,0 +1,92 @@
+import React, { useEffect, useState } from 'react';
+
+import { Link } from 'react-router-dom';
+
+const AdminHome = () => {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        fetch('https://calm-stream-57653.herokuapp.com/getAllUsers')
+            .then(res => res.json())
+            .then(data => setUsers(data));
+    }, []);
+
+    const deleteTask = (id) => {
+        const deletedId = id;
+        fetch(`https://calm-stream-57653.herokuapp.com/deleteUserTaskById/${id}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(data => {
+                const filterData = users.filter(user => user._id != deletedId)
+                setUsers(filterData)
+            })
+    }
+
+    return (
+        <>
+           <div className='container-fluid'>
+        <div className="row">
+          <div className="col-md-3 px-3 py-3">
+           <Link to="/"> <img height='60' src="https://i.ibb.co/GQYn4Tp/logo.png" alt="" /> </Link>
+          </div>
+          <div className="col-md-9 px-3 py-3">
+            <h4 className='font-weight-bolder mt-3'>Volunteer Resister List</h4>
+          </div>
+        </div>
+      </div>
+
+      <div className='container-fluid'>
+        <div className="row ">
+          <div className="col-md-3 fullHeight px-3 py-3">
+
+            <ul className="nav flex-column">
+              <li className="nav-item mb-3">
+                <Link className="nav-link font-weight-bold active" to="/AdminHome">
+                  <span><img height='30' src="https://i.ibb.co/Jc6ZbLQ/users.png" alt="" /></span>  Volunteer Resister List</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link font-weight-bold " to="/AddTask">
+                  <span><img height='30' src="https://i.ibb.co/fYcgC8L/add.png" alt="" /></span>  Add Event</Link>
+              </li>
+            </ul>
+
+          </div>
+                    <div className="col-md-9 fullHeight background py-3">
+                        <div className="card shadow h-100 rounded px-3">
+
+                            <table class="table table-hover px-4">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Registration</th>
+                                        <th scope="col">Volunteer Taks</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {users.map(user =>
+                                        <tr key={user._id} >
+                                            <td>{user.name}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.date}</td>
+                                            <td>{user.activity}</td>
+                                            <td><button title="Delete" onClick={() => deleteTask(user._id)} class='btn btn-danger'><img height='20' src="https://i.ibb.co/MR2ZvS3/trash.png" alt="" /></button></td>
+                                        </tr>
+                                    )}
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </>
+    );
+};
+
+export default AdminHome;
